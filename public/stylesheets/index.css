@@ -1,0 +1,36 @@
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.navbar-brand>img {
+  display: block;
+  height: inherit;
+  margin-top: 0px;
+}
+
+.site-logo {
+  margin-top: -20px;
+  margin-right: 20px;
+  padding: 0px;
+}
+
+.jumbotron {
+  background-image: url("../images/marketing-superstars.png");
+}
+
+.btn-primary {
+  background-color: #A9BCDA;
+}
+
+.add_to_test_index {
+  float: right;
+}
+
+.questions.checkbox {
+  display: inline;
+}
+
+.question input {
+  float: right;
+}

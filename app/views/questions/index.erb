@@ -1,0 +1,98 @@
+<div class="container">
+
+      <div class="page-header">
+        <h2><%= Question.count %> questions currently in the library</h2>
+        <p class="lead">Pick your favorites and add them to your tests.</p>
+      </div>
+
+      <div>
+        <a href="/questions?sort_by=rating" class="btn btn-primary btn-lg active">Best rated first</a>
+        <a href="/questions" class="btn btn-default btn-lg active">Most recent first</a>
+      </div>
+
+      <form method ="post" action ="/question/add_to_test">
+        <div class="add_to_test_index">
+        <% if current_user.tests.empty? == false %>
+          <p> Add selected questions to this test: </p>
+            <select class="form-control" id="user_tests" name="test_id">
+             <% current_user.tests.each do |test| %>
+                <option value="<%= test.id %>"><%= test.name %></option>
+              <% end %>
+            </select>
+        <% end %>
+        </div>
+
+      <% @all_questions.each_with_index do |question, qidx| %>
+        <div class="question">
+          <div class="questions">
+            <h4>
+              <a href="/questions/<%= question.id %>"><%= question.content %></a>
+            </h4>
+
+            <% unless question.image == "" %>
+              <p class="text-muted"><em>(attachment included)</em></p>
+            <% end %>
+          <p>
+            <% unless question.average_rating == 0 %>
+              <em>rating: <%= question.average_rating %></em>
+
+              <% if question.average_rating %>
+                  <% question.average_rating.to_i.times do %>
+                    <i class="fa fa-star" style="color: #FFDF88"></i>
+                  <% end %>
+                  <% (5 - question.average_rating.to_i).times do %>
+                    <i class="fa fa-star-o" style="color: #D2D2D2"></i>
+                  <% end %>
+              <% end %>
+
+            <% end %>
+          </p>
+
+            <ul>
+              <% question.answers.each do |answer| %>
+                <li><%= answer.content %> (<%= answer.correct %>)</li>
+              <% end %>
+            </ul>
+
+          <div class="tags">
+            <p>Tags:
+              <% question.question_tags.each do |qt_combination| %>
+                <a href="../tags/<%= qt_combination.tag_id.to_i %>"> <%= Tag.find(qt_combination.tag_id.to_i).name %></a>
+              <% end %>
+            </p>
+          </div>
+
+           <div><em>posted by <%= question.user.name %>
+            <% if current_user && question.user_id == current_user.id %>
+              <a href="/questions/<%= question.id %>/delete">(delete question)</a>
+            <% end %>
+            </em>
+          </div>
+
+          <input class="add_q_to_test" type="checkbox" name="questions[<%= qidx %>]" value="<%=question.id%>">
+
+          <hr>
+        </div>
+        </div>
+
+
+      <% end %>
+
+      <input type="submit" value="Submit">
+      </form>
+
+      <% if params[:offset].to_i != 0 %>
+        <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:offset] || 0).to_i - (params[:limit] || 5).to_i).to_s %>">Prev</a>
+      <% end %>
+
+      <% if params[:offset].to_i + params[:limit].to_i > Question.count %>
+        <a href="questions">Back to first page</a>
+      <% else %>
+        <% unless Question.count <= 5 %>
+          <a href="questions?limit=<%= params[:limit] || 5 %>&offset=<%= ((params[:limit] || 5).to_i + (params[:offset] || 0).to_i).to_s %>">Next</a>
+        <% end %>
+      <% end %>
+
+      </div>
+
+</div>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title><%= @title %></title>
+
+    <link href="/stylesheets/index.css" rel="stylesheet">
+    <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/jquery-bar-rating/dist/themes/fontawesome-stars.css">
+    <link rel="stylesheet" href="http://getbootstrap.com/examples/jumbotron/jumbotron.css">
+
+</head>
+
+
+<body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="site-logo">
+            <a class="navbar-brand" href="/"><img src="../images/marketeers-wide.png" alt="Marketeers: Crowd-sourced test building platform for assessing marketing skills"></a>
+          </div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <% if current_user %>
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My account <span class="caret"></span></a>
+                <ul class="dropdown-menu">`
+                  <li><a href="/questions/new">Submit a new question</a></li>
+                  <li><a href="/tests/new">Create a new test</a></li>
+                  <li><a href="/tests">See your saved tests</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Browse around</li>
+                  <li><a href="/questions">Questions library</a></li>
+                  <li><a href="/tags">Filter by tag</a></li>
+                </ul>
+              </li>
+              <% end %>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if current_user %>
+                <li><a href="/logout">Log out (<%= current_user.name %>)</a></li>
+            <% else %>
+                <li><a href="/login">Sign in</a></li>
+                <li><a href="/users/new">Register</a></li>
+            <% end %>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+  <%= yield %>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/javascript/application.js"></script>
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+<script src="/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+<script type="text/javascript">
+   $(function() {
+      $('#rating').barrating({
+        theme: 'fontawesome-stars',
+        initialRating: 1,
+        showValues: true,
+        showSelectedRating: true
+      });
+   });
+</script>
+
+</body>
+</html>

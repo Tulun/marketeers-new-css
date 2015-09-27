@@ -1,0 +1,9 @@
+<form method="post" action="/tags">
+
+    <div>
+      <label class="label" for="name">Name of tag:</label>
+      <input class="input" type="text" name="name" value="<%=@new_tag.name if @new_tag %>">
+    </div>
+
+    <button type="submit" class="button 2, btn btn-default">Create tag</button>
+</form>
